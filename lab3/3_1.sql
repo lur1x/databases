@@ -17,8 +17,7 @@ END
 
 USE cinema_db;
 
-
-/* 1. Таблица жанров */
+/* Таблица жанров */
 IF NOT EXISTS (
 	SELECT 1 
 	FROM sys.tables 
@@ -41,7 +40,7 @@ BEGIN
 END
 
 
-/* 2. Таблица фильмов */
+/* Таблица фильмов */
 IF NOT EXISTS (
 	SELECT 1 
 	FROM sys.tables 
@@ -69,7 +68,7 @@ BEGIN
 END
 
 
-/* 3. Таблица кинотеатров */
+/* Таблица кинотеатров */
 IF NOT EXISTS (
 	SELECT 1 
 	FROM sys.tables 
@@ -95,7 +94,7 @@ BEGIN
 END
 
 
-/* 4. Таблица залов */
+/* Таблица залов */
 IF NOT EXISTS (SELECT 1 
 	FROM sys.tables 
 	WHERE 
@@ -108,8 +107,8 @@ BEGIN
         name NVARCHAR(50) NOT NULL,
         capacity INT NOT NULL,
         id_cinema INT NOT NULL,
-        has_3d BIT NOT NULL DEFAULT 0,
-        has_dolby BIT NOT NULL DEFAULT 0,
+        has_3d TINYINT NOT NULL DEFAULT 0,
+        has_dolby TINYINT NOT NULL DEFAULT 0,
         CONSTRAINT pk_hall PRIMARY KEY (id_hall),
         CONSTRAINT fk_hall_cinema FOREIGN KEY (id_cinema) REFERENCES dbo.cinema(id_cinema)
     );
@@ -121,7 +120,7 @@ BEGIN
 END
 
 
-/* 5. Таблица сеансов */
+/* Таблица сеансов */
 IF NOT EXISTS (
 	SELECT 1 
 	FROM sys.tables 
@@ -135,7 +134,7 @@ BEGIN
         start_time DATETIME2 NOT NULL,
         id_movie INT NOT NULL,
         id_hall INT NOT NULL,
-        is_premiere BIT NOT NULL DEFAULT 0,
+        is_premiere TINYINT NOT NULL DEFAULT 0,
         CONSTRAINT pk_screening PRIMARY KEY (id_screening),
         CONSTRAINT fk_screening_movie FOREIGN KEY (id_movie) REFERENCES dbo.movie(id_movie),
         CONSTRAINT fk_screening_hall FOREIGN KEY (id_hall) REFERENCES dbo.hall(id_hall)
@@ -148,7 +147,7 @@ BEGIN
 END
 
 
-/* 6. Таблица людей */
+/* Таблица состава фильма */
 IF NOT EXISTS (
 	SELECT 1 
 	FROM sys.tables 
@@ -173,7 +172,7 @@ BEGIN
 END
 
 
-/* 7. Таблица связи фильмов и людей */
+/* Таблица связи фильмов и людей */
 IF NOT EXISTS (
 	SELECT 1 
 	FROM sys.tables 
@@ -199,7 +198,7 @@ BEGIN
 END
 
 
-/* 8. Таблица покупателей */
+/* Таблица покупателей */
 IF NOT EXISTS (
 	SELECT 1 
 	FROM sys.tables 
@@ -225,7 +224,7 @@ BEGIN
 END
 
 
-/* 9. Таблица цен */
+/* Таблица цен */
 IF NOT EXISTS (
 	SELECT 1 
 	FROM sys.tables 
@@ -249,7 +248,7 @@ BEGIN
 END
 
 
-/* 10. Таблица билетов */
+/* Таблица билетов */
 IF NOT EXISTS (
 	SELECT 1 
 	FROM sys.tables 
@@ -279,3 +278,52 @@ END
 
 
 PRINT 'Все объекты базы данных cinema_db успешно проверены/созданы.';
+
+
+SELECT 
+    name AS table_name,
+    SCHEMA_NAME(schema_id) AS schema_name
+FROM sys.tables
+ORDER BY schema_name, table_name;
+
+
+/* Жанры */
+SELECT * FROM dbo.genre;
+
+/* Фильмы */
+SELECT * FROM dbo.movie;
+
+/* Кинотеатры */
+SELECT * FROM dbo.cinema;
+
+/* Залы */
+SELECT * FROM dbo.hall;
+
+/* Сеансы */
+SELECT * FROM dbo.screening;
+
+/* Люди (актёры, режиссёры) */
+SELECT * FROM dbo.person;
+
+/* Связь фильмов и людей */
+SELECT * FROM dbo.movie_person;
+
+/* Покупатели */
+SELECT * FROM dbo.customer;
+
+/* Цены */
+SELECT * FROM dbo.price;
+
+/* Билеты */
+SELECT * FROM dbo.ticket;
+
+
+/* изменение типа данных */
+USE cinema_db
+ALTER TABLE dbo.hall
+ALTER COLUMN has_3d TINYINT NOT NULL;
+
+ALTER TABLE dbo.hall
+ALTER COLUMN has_dolby TINYINT NOT NULL;
+
+

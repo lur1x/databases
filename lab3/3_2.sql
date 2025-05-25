@@ -18,7 +18,7 @@ END
 USE warehouse_db;
 
 
-/* 1. Таблица единиц измерения */
+/* Таблица единиц измерения */
 IF NOT EXISTS (
     SELECT 1 
     FROM sys.tables 
@@ -41,7 +41,7 @@ BEGIN
 END
 
 
-/* 2. Таблица товаров */
+/* Таблица товаров */
 IF NOT EXISTS (
     SELECT 1 
     FROM sys.tables 
@@ -68,7 +68,7 @@ BEGIN
 END
 
 
-/* 3. Таблица складов */
+/* Таблица складов */
 IF NOT EXISTS (
     SELECT 1 
     FROM sys.tables 
@@ -92,7 +92,7 @@ BEGIN
 END
 
 
-/* 4. Таблица поставщиков */
+/* Таблица поставщиков */
 IF NOT EXISTS (
     SELECT 1 
     FROM sys.tables 
@@ -117,7 +117,7 @@ BEGIN
 END
 
 
-/* 5. Таблица сотрудников */
+/* Таблица сотрудников */
 IF NOT EXISTS (
     SELECT 1 
     FROM sys.tables 
@@ -142,7 +142,7 @@ BEGIN
 END
 
 
-/* 6. Таблица накладных */
+/*  Таблица накладных */
 IF NOT EXISTS (
     SELECT 1 
     FROM sys.tables 
@@ -172,7 +172,7 @@ BEGIN
     PRINT 'Таблица invoice уже существует';
 END
 
-/* 7. Таблица товаров в накладных */
+/* Таблица товаров в накладных */
 IF NOT EXISTS (
     SELECT 1 
     FROM sys.tables 
@@ -200,3 +200,26 @@ BEGIN
 END
 
 PRINT 'Все таблицы и индексы успешно созданы/проверены';
+
+USE warehouse_db
+
+/* Таблица единиц измерений */
+SELECT * FROM dbo.unit;
+
+/* Таблица товаров */
+SELECT * FROM dbo.product;
+
+/* Таблица складов */
+SELECT * FROM dbo.warehouse;
+
+/* Таблица поставщики */
+SELECT * FROM dbo.supplier;
+
+/* Таблица сотрудники */
+SELECT * FROM dbo.employee;
+
+/* Таблица накладные */
+SELECT * FROM dbo.invoice;
+
+/* Таблица товары в накладных */
+SELECT * FROM dbo.invoice_product;
